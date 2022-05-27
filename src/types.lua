@@ -22,3 +22,10 @@ export type Theme = {
 	SelectionColor: Color3,
 	SelectionGentle: Color3,
 }
+
+export type LexerToken = "iden" | "keyword" | "builtin" | "string" | "number" | "operator"
+export type Token = {
+	Position: Vector2,
+	Text: string,
+	Token: LexerToken,
+}

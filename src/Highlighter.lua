@@ -14,13 +14,6 @@ local ComputedPairs = Fusion.ComputedPairs
 local Computed = Fusion.Computed
 local New = Fusion.New
 
-type TokenType = "iden" | "keyword" | "builtin" | "string" | "number" | "operator"
-type Token = {
-	Position: Vector2,
-	Text: string,
-	Kind: TokenKind,
-}
-
 type HighlighterProperties = {
 	Content: Fusion.Value<string>,
 	CaretPosition: Fusion.Value<number>,
@@ -56,7 +49,7 @@ return function(props: HighlighterProperties): Frame
 				table.insert(tokens, {
 					Position = Vector2.new(currentPosX, currentPosX),
 					Text = source,
-					Kind = token,
+					Token = token,
 				})
 			end
 		end
@@ -64,7 +57,7 @@ return function(props: HighlighterProperties): Frame
 		return tokens
 	end)
 
-	return ComputedPairs(tokens, function(token: Token)
+	return ComputedPairs(tokens, function(token: types.Token)
 		return New "TextLabel" {
 			BackgroundColor3 = Theme.SelectionGentle(props.Theme),
 			BackgroundTransparency = nil,
