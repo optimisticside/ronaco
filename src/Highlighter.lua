@@ -67,6 +67,10 @@ return function(props: HighlighterProperties): Frame
 			local lines = string.split(source, "\n")
 
 			for count, line in ipairs(lines) do
+				if not line:match("^%s+$") then
+					continue
+				end
+
 				-- Only update position when going past new line because the
 				-- token may not start at the start of the line.
 				if count > 1 then
