@@ -3,6 +3,8 @@
 	to make it look like the text is being highlighted.
 ]]
 
+local WORD_MATCH = "[A-Za-z0-9_]"
+
 local Package = script.Parent
 
 local Fusion = require(Package.Fusion)
@@ -19,12 +21,40 @@ type HighlighterProperties = {
 	CaretPosition: Fusion.Value<number>,
 	CharSize: Vector2,
 	Font: Enum.Font,
-	SelectedWord: Fusion.Computed<string>,
+	Selection: Fusion.Value<string>,
 	TextSize: number,
 	Theme: Fusion.Value<types.Theme>,
 }
 
 return function(props: HighlighterProperties): Frame
+	local selectedWord = Computed(function()
+		local content = props.Content:get()
+		local caretPos = props.CaretPosition:get()
+
+		local leftBound = math.max(caretPos - 1, 0)
+		local rightBound = math.min(caretPos + 1, #content)
+
+		-- Keep extending bounds left and right, character-by-character, as
+		-- long as the new character matches `WORD_MATCH`.
+		while leftBound > 0 and content:sub(leftBound + 1, leftBound + 1):match(WORD_MATCH) do
+			leftBound = leftBound - 1
+		end
+		while leftBound < #content and content:sub(rightBound, rightBound):match(WORD_MATCH) do
+			rightBound = rightBound + 1
+		end
+
+		-- Push back our boundaries by 1 character if they do not match
+		-- `WORD_MATCH`
+		if not content:sub(leftBound + 1, leftBound + 1) then
+			leftBound = leftBound + 1
+		end
+		if not content:sub(rightBound, rightBound) then
+			rightBound = rightBound - 1
+		end
+
+		return content:sub(leftBound + 1, rightBound)
+	end)
+
 	local tokens = Computed(function()
 		-- TODO: Check the last lex and only update the tokens that were
 		-- changed, so we don't waste our time.
@@ -61,7 +91,7 @@ return function(props: HighlighterProperties): Frame
 
 	return ComputedPairs(tokens, function(token: types.Token)
 		local backgroundTransparency = Computed(function()
-			return props.SelectedWord:get() == token.Text
+			return selectedWord:get() == token.Text
 		end)
 
 		return New "TextLabel" {
