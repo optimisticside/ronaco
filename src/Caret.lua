@@ -6,21 +6,22 @@ local Package = script.Parent
 
 local Fusion = require(Package.Fusion)
 local Theme = require(Package.Theme)
+local types = require(Package.types)
 
 local Computed = Fusion.Computed
 local Value = Fusion.Value
 local New = Fusion.New
 
 type CaretProperties = {
-	Theme: Theme,
-	CaretPlace: Fusion.Value<number>,
+	Theme: Fusion.Value<types.Theme>,
+	CaretPosition: Fusion.Value<number>,
 	CharSize: Vector2;
 }
 
 return function(props: CaretProperties): Frame
 	local position = Computed(function()
-		local caretPlace = props.CaretPlace:get()
-		return UDim2.new(0, caretPlace.X * props.CharSize.X, 0, caretPlace.Y * props.CharSize.Y)
+		local caretPosition = props.CaretPosition:get()
+		return UDim2.new(0, caretPosition.X * props.CharSize.X, 0, caretPosition.Y * props.CharSize.Y)
 	end)
 
 	return New "Frame" {

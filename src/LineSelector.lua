@@ -10,6 +10,7 @@ local Package = script.Parent
 
 local Fusion = require(Package.Fusion)
 local Theme = require(Package.Theme)
+local types = require(Package.types)
 
 local Computed = Fusion.Computed
 local New = Fusion.New
@@ -18,7 +19,7 @@ type LineSelectorProps = {
 	CaretPlace: Fusion.Value<Vector2>,
 	CharHeight: number,
 	Focused: Fusion.Value<boolean>,
-	Theme: Fusion.Value<Theme.EditorTheme>,
+	Theme: Fusion.Value<types.EditorTheme>,
 }
 
 return function(props: LineSelectorProps): Frame
