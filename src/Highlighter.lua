@@ -19,6 +19,7 @@ type HighlighterProperties = {
 	CaretPosition: Fusion.Value<number>,
 	CharSize: Vector2,
 	Font: Enum.Font,
+	SelectedWord: Fusion.Value<string>,
 	TextSize: number,
 	Theme: Fusion.Value<types.Theme>,
 }
@@ -59,9 +60,13 @@ return function(props: HighlighterProperties): Frame
 	end)
 
 	return ComputedPairs(tokens, function(token: types.Token)
+		local backgroundTransparency = Computed(function()
+			return props.SelectedWord:get() == token.Text
+		end)
+
 		return New "TextLabel" {
 			BackgroundColor3 = Theme.SelectionGentle(props.Theme),
-			BackgroundTransparency = nil,
+			BackgroundTransparency = backgroundTransparency,
 			BorderSizePixel = 0,
 			Font = props.Font,
 			Size = UDim2.new(0, token.Position.X * props.CharSize.X, 0, token.Position.Y * props.CharSize.Y),
