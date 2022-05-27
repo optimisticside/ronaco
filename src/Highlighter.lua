@@ -14,7 +14,7 @@ local ComputedPairs = Fusion.ComputedPairs
 local Computed = Fusion.Computed
 local New = Fusion.New
 
-type TokenType = nil
+type TokenType = "iden" | "keyword" | "builtin" | "string" | "number" | "operator"
 type Token = {
 	Position: Vector2,
 	Text: string,
