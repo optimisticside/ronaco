@@ -12,7 +12,6 @@ local types = require(Package.types)
 
 local ComputedPairs = Fusion.ComputedPairs
 local Computed = Fusion.Computed
-local Value = Fusion.Value
 local New = Fusion.New
 
 type TokenType = nil
