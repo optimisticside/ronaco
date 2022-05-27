@@ -48,9 +48,10 @@ return function(props: HighlighterProperties): Frame
 				-- of characters.
 				table.insert(tokens, {
 					Position = Vector2.new(currentPosX, currentPosX),
-					Text = source,
+					Text = line,
 					Token = token,
 				})
+				currentPosX = currentPosX + #line
 			end
 		end
 
