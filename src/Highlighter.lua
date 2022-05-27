@@ -19,7 +19,7 @@ type HighlighterProperties = {
 	CaretPosition: Fusion.Value<number>,
 	CharSize: Vector2,
 	Font: Enum.Font,
-	SelectedWord: Fusion.Value<string>,
+	SelectedWord: Fusion.Computed<string>,
 	TextSize: number,
 	Theme: Fusion.Value<types.Theme>,
 }
