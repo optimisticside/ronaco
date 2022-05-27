@@ -1,8 +1,4 @@
 --[[
-	Highlights the line that a cursor is on.
-]]
-
---[[
 	Highlights the line that the caret is currently on.
 ]]
 
@@ -16,16 +12,16 @@ local Computed = Fusion.Computed
 local New = Fusion.New
 
 type LineSelectorProps = {
-	CaretPlace: Fusion.Value<Vector2>,
+	CaretPosition: Fusion.Value<Vector2>,
 	CharHeight: number,
 	Focused: Fusion.Value<boolean>,
-	Theme: Fusion.Value<types.EditorTheme>,
+	Theme: Fusion.Value<types.Theme>,
 }
 
 return function(props: LineSelectorProps): Frame
 	local position = Computed(function()
-		local caretPlace = props.CaretPlace:get()
-		return UDim2.new(0, 2, 0, props.CharHeight * caretPlace.Y + 2)
+		local caretPos = props.CaretPosition:get()
+		return UDim2.new(0, 2, 0, props.CharHeight * caretPos.Y + 2)
 	end)
 
 	return New "Frame" {

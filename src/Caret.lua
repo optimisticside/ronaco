@@ -20,8 +20,8 @@ type CaretProperties = {
 
 return function(props: CaretProperties): Frame
 	local position = Computed(function()
-		local caretPosition = props.CaretPosition:get()
-		return UDim2.new(0, caretPosition.X * props.CharSize.X, 0, caretPosition.Y * props.CharSize.Y)
+		local caretPos = props.CaretPosition:get()
+		return UDim2.new(0, caretPos.X * props.CharSize.X, 0, caretPos.Y * props.CharSize.Y)
 	end)
 
 	return New "Frame" {

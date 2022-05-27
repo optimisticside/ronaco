@@ -6,7 +6,7 @@ local types = require(Package.types)
 local Computed = Fusion.Computed
 
 local function ComputedElement(name: string)
-	return function(theme: Fusion.Value<types.Theme>)
+	return function(theme: Fusion.Value<types.Theme>): Fusion.Computed<Color3>
 		return Computed(function()
 			return theme:get()[name]
 		end)
