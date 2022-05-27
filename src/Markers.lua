@@ -35,7 +35,7 @@ return function(props: MarkersProperties): types.Array<Frame>
 			BackgroundColor3 = color,
 			BorderSizePixel = 0,
 			Size = UDim2.new(0, 4, 0, 6),
-			Position = UDim2.new(0, 4, props.CharSize.Y / props.CanvasSize.Y.Offset, 0)
+			Position = UDim2.new(0, 0, props.CharSize.Y / props.CanvasSize.Y.Offset, 0)
 		}
 	end)
 end
