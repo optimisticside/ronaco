@@ -95,7 +95,7 @@ return function(props: HighlighterProperties): Frame
 
 	return ComputedPairs(tokens, function(token: types.Token)
 		local backgroundTransparency = Computed(function()
-			return selectedWord:get() == token.Text
+			return if selectedWord:get() == token.Text then 0 else 0
 		end)
 
 		return New "TextLabel" {
@@ -105,7 +105,7 @@ return function(props: HighlighterProperties): Frame
 			Font = props.Font,
 			Size = UDim2.new(0, token.Position.X * props.CharSize.X, 0, token.Position.Y * props.CharSize.Y),
 			Text = token.Text,
-			TextColor3 = Theme.Text(props.Theme),
+			TextColor3 = Theme[token.Token](props.Theme),
 			TextSize = props.TextSize,
 			TextXAlignment = Enum.TextXAlignment.Left,
 		}

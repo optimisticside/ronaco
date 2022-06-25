@@ -23,6 +23,11 @@ export type Theme = {
 	SelectionGentle: Color3,
 }
 
+export type Selection = {
+	X: number,
+	Y: number,
+}
+
 export type LexerToken = "iden" | "keyword" | "builtin" | "string" | "number" | "operator"
 export type Token = {
 	Position: Vector2,

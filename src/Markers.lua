@@ -17,12 +17,12 @@ local New = Fusion.New
 type MarkersProperties = {
 	CanvasSize: Fusion.Value<UDim2>,
 	CharSize: Vector2,
-	SelectionMatches: Fusion.Computed<types.Selection>,
+	MarkerLocations: Fusion.Value<types.Array<types.Selection>>,
 	Text: Fusion.Value<string>,
 	Theme: Fusion.Value<types.Theme>,
 }
 
-return function(props: MarkersProperties): types.Array<Frame>
+return function(props: MarkersProperties): Fusion.Computed<types.Array<Frame>>
 	local backgroundColor = Theme.Background(props.Theme)
 	local textColor = Theme.Text(props.Theme)
 
@@ -30,12 +30,12 @@ return function(props: MarkersProperties): types.Array<Frame>
 		return backgroundColor:get():Lerp(textColor:get(), COLOR_SHIFT)
 	end)
 
-	return ComputedPairs(props.SelectionMatches, function(match)
+	return ComputedPairs(props.MarkerLocations, function(line)
 		return New "Frame" {
 			BackgroundColor3 = color,
 			BorderSizePixel = 0,
 			Size = UDim2.new(0, 4, 0, 6),
-			Position = UDim2.new(0, 0, (match.Y * props.CharSize.Y) / props.CanvasSize.Y.Offset, 0)
+			Position = UDim2.new(0, 0, (line.Y * props.CharSize.Y) / props.CanvasSize.Y.Offset, 0)
 		}
 	end)
 end
